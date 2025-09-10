@@ -1,0 +1,21 @@
+{
+  "name": "stok-gudang-kasir",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "body-parser": "^1.20.1",
+    "bcrypt": "^5.1.0",
+    "sqlite3": "^5.1.6",
+    "better-sqlite3": "^8.3.0",
+    "ejs": "^3.1.8",
+    "pdfkit": "^0.13.0",
+    "exceljs": "^4.3.0",
+    "multer": "^1.4.5"
+  }
+}

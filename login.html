@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login - Kasir</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <div class="w-full max-w-md bg-white p-6 rounded shadow">
+    <h2 class="text-xl font-semibold mb-4">Login</h2>
+    <form id="loginForm">
+      <input name="username" placeholder="Username" class="w-full p-2 border mb-3" required />
+      <input name="password" type="password" placeholder="Password" class="w-full p-2 border mb-3" required />
+      <button class="w-full bg-blue-600 text-white p-2 rounded">Login</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async e=>{
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const res = await fetch('/api/login',{method:'POST', body: JSON.stringify({ username: fd.get('username'), password: fd.get('password')}), headers:{'Content-Type':'application/json'}});
+      const j = await res.json();
+      if(j.ok) location.href = '/views/dashboard.html';
+      else alert('Login gagal');
+    });
+  </script>
+</body>
+</html>

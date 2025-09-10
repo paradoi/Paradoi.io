@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="p-4">
+    <div class="flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Dashboard</h1>
+      <div>
+        <a href="/views/cashier.html" class="px-3 py-1 bg-green-600 text-white rounded">Kasir</a>
+        <a href="/views/products.html" class="px-3 py-1 bg-blue-600 text-white rounded">Produk</a>
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <canvas id="salesChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    async function load(){
+      // simple demo chart: last 7 days
+      const to = new Date();
+      const from = new Date(); from.setDate(to.getDate()-7);
+      const res = await fetch(`/api/reports/sales?from=${from.toISOString().slice(0,10)}&to=${to.toISOString().slice(0,10)}&group=daily`);
+      const j = await res.json();
+      const labels = j.data.map(d=>d.period);
+      const data = j.data.map(d=>d.total);
+      new Chart(document.getElementById('salesChart').getContext('2d'),{
+        type:'bar',
+        data:{ labels, datasets:[{ label:'Penjualan', data }] }
+      });
+    }
+    load();
+  </script>
+</body>
+</html>
